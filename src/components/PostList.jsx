@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import PostItem from './PostItem';
 
-const PostList = (props) => {
+const PostList = ({posts, title, remove}) => {
     return (
         <div>
-            <h1 style={{textAlign:'center'}}>{props.title}</h1>
+            <h1 style={{textAlign:'center'}}>{title}</h1>
             <div>
             {
-                props.posts.map((postItem, index) => <PostItem number={index + 1} post={postItem} key={postItem.id} />)
+                posts.map((postItem, index) => <PostItem number={index + 1} remove={remove} post={postItem} key={postItem.id} />)
             }
             </div>
         </div>

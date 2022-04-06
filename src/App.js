@@ -11,13 +11,21 @@ function App() {
   ]);
 
   const createPost = (newPost) => {
-    setPosts(newPost);
+    setPosts([...posts, newPost]);
+  }
+
+  const removePost = (removedPost) => {
+    setPosts(posts.filter(p => p.id !== removedPost.id));
   }
 
   return (  
     <div className="App"> 
       <PostForm create={createPost}/>
-      <PostList posts={posts} title="My favorite posts"/>      
+      {
+        posts.length > 0
+        ? <PostList remove={removePost} posts={posts} title="My favorite posts"/>      
+        : <h1 style={{textAlign: 'center'}}>No posts!</h1>
+      }      
     </div>    
   );
 }
