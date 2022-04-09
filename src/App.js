@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState }  from 'react';
 import './styles/App.css';
 import PostList from './components/PostList';
 import PostForm from './components/PostForm';
-import MySelect from './components/UI/select/MySelect';
-import MyInput from './components/UI/input/MyInput';
+import PostFilter from './components/PostFilter';
 
 function App() {  
   const [posts, setPosts] = useState([
@@ -12,8 +11,7 @@ function App() {
     { id: 3, title: "React tutorial", body: "Learn Rect and Redux" }
   ]);
 
-  const [selectedSort, setSelectedSort] = useState('');
-  const [searchParam, setSearchParam] = useState('');
+  const [filter, setFilter] = useState({sortBy:"", searchBy:""})
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
@@ -23,32 +21,30 @@ function App() {
     setPosts(posts.filter(p => p.id !== removedPost.id));
   }
 
-  const sortPosts = (sort) => {
-    setSelectedSort(sort);
-    setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])));
-  }
+  const sortedPosts = useMemo(() => {
+    console.log(`Sort by ${filter.sortBy}`);
+    if (filter.sortBy)
+      return [...posts].sort((a, b) => a[filter.sortBy].localeCompare(b[filter.sortBy]));
+    return posts;
+  }, [filter.sortBy, posts]);
 
-  const searchPost = (searchParam) => {
-    setSearchParam(searchParam);
-    if(searchParam.length > 0)
-      setPosts(posts.filter(p => p.title.includes(searchParam) || p.body.includes(searchParam)));
-    else
-      setPosts(posts);
-  }
+  const sortedAndFilteredPosts = useMemo(() => {
+    console.log(`Search by ${filter.searchBy}`);
+    if (filter.searchBy)
+      return sortedPosts.filter(p => 
+        p.title.toLowerCase().includes(filter.searchBy.toLowerCase()) 
+          || p.body.toLowerCase().includes(filter.searchBy.toLowerCase()));
+    return sortedPosts;
+  }, [filter.searchBy, sortedPosts]);
 
   return (  
     <div className="App"> 
       <PostForm create={createPost}/>
-      <hr/>      
-      <MyInput value={searchParam} onChange={e => searchPost(e.target.value)} placeholder="Search..." />
-      <MySelect 
-        value={selectedSort}
-        onChange={sortPosts}
-        defaultText="Sort by" 
-        options={[{value: "title", text: "Title"}, {value: "body", text: "Body"}]}/>
+      <hr/>    
+      <PostFilter filter={filter} setFilter={setFilter}/>        
       {
-        posts.length > 0
-        ? <PostList remove={removePost} posts={posts} title="My favorite posts"/>      
+        sortedAndFilteredPosts.length > 0
+        ? <PostList remove={removePost} posts={sortedAndFilteredPosts} title="My favorite posts"/>      
         : <h1 style={{textAlign: 'center'}}>No posts!</h1>
       }      
     </div>    
