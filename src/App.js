@@ -3,6 +3,8 @@ import './styles/App.css';
 import PostList from './components/PostList';
 import PostForm from './components/PostForm';
 import PostFilter from './components/PostFilter';
+import MyModal from './components/UI/modal/MyModal';
+import MyButton from './components/UI/button/MyButton';
 
 function App() {  
   const [posts, setPosts] = useState([
@@ -12,9 +14,11 @@ function App() {
   ]);
 
   const [filter, setFilter] = useState({sortBy:"", searchBy:""})
+  const [modalVisibility, setModalVisibility] = useState(false);
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
+    setModalVisibility(false);
   }
 
   const removePost = (removedPost) => {
@@ -39,14 +43,13 @@ function App() {
 
   return (  
     <div className="App"> 
-      <PostForm create={createPost}/>
+      <MyButton onClick={() => setModalVisibility(true)}>Create Post</MyButton>
+      <MyModal visible={modalVisibility} setVisible={setModalVisibility}>
+        <PostForm create={createPost}/>
+      </MyModal>     
       <hr/>    
       <PostFilter filter={filter} setFilter={setFilter}/>        
-      {
-        sortedAndFilteredPosts.length > 0
-        ? <PostList remove={removePost} posts={sortedAndFilteredPosts} title="My favorite posts"/>      
-        : <h1 style={{textAlign: 'center'}}>No posts!</h1>
-      }      
+      <PostList remove={removePost} posts={sortedAndFilteredPosts} title="My favorite posts"/>      
     </div>    
   );
 }

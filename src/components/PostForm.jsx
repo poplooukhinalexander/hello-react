@@ -16,7 +16,7 @@ const PostForm = ({create}) => {
         <form>            
             <MyInput type="text" placeholder="Enter Title" value={post.title} onChange={e => setPost({...post, title: e.target.value})}/>
             <MyInput type="text" placeholder="Enter Body" value={post.body} onChange={e => setPost({...post, body: e.target.value})}/>
-            <MyButton onClick={addNewPost}>Create Post</MyButton>
+            <MyButton onClick={addNewPost}>Save New Post</MyButton>
         </form>
     );
 }
