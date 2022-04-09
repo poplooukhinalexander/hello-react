@@ -43,11 +43,11 @@ function App() {
 
   return (  
     <div className="App"> 
-      <MyButton onClick={() => setModalVisibility(true)}>Create Post</MyButton>
+      <MyButton style={{marginTop: 30}} onClick={() => setModalVisibility(true)}>Create Post</MyButton>
       <MyModal visible={modalVisibility} setVisible={setModalVisibility}>
         <PostForm create={createPost}/>
       </MyModal>     
-      <hr/>    
+      <hr style={{marginTop: 5}}/>    
       <PostFilter filter={filter} setFilter={setFilter}/>        
       <PostList remove={removePost} posts={sortedAndFilteredPosts} title="My favorite posts"/>      
     </div>    

@@ -6,8 +6,8 @@ const MyModal = ({children, visible, setVisible}) => {
     if (visible)
         rootClasses.push(Classes.active);
     return (
-        <div className={rootClasses.join(' ')}>
-            <div className={Classes.myModalContent}>
+        <div className={rootClasses.join(' ')} onClick={() => setVisible(false)}>
+            <div className={Classes.myModalContent} onClick={e => e.stopPropagation()}>
                 {children}
             </div>
         </div>
