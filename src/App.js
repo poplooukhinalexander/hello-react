@@ -1,10 +1,11 @@
-import React, { useMemo, useState }  from 'react';
+import React, { useState }  from 'react';
 import './styles/App.css';
 import PostList from './components/PostList';
 import PostForm from './components/PostForm';
 import PostFilter from './components/PostFilter';
 import MyModal from './components/UI/modal/MyModal';
 import MyButton from './components/UI/button/MyButton';
+import { useSortedAndFilteredPosts } from './hooks/usePosts';
 
 function App() {  
   const [posts, setPosts] = useState([
@@ -25,21 +26,7 @@ function App() {
     setPosts(posts.filter(p => p.id !== removedPost.id));
   }
 
-  const sortedPosts = useMemo(() => {
-    console.log(`Sort by ${filter.sortBy}`);
-    if (filter.sortBy)
-      return [...posts].sort((a, b) => a[filter.sortBy].localeCompare(b[filter.sortBy]));
-    return posts;
-  }, [filter.sortBy, posts]);
-
-  const sortedAndFilteredPosts = useMemo(() => {
-    console.log(`Search by ${filter.searchBy}`);
-    if (filter.searchBy)
-      return sortedPosts.filter(p => 
-        p.title.toLowerCase().includes(filter.searchBy.toLowerCase()) 
-          || p.body.toLowerCase().includes(filter.searchBy.toLowerCase()));
-    return sortedPosts;
-  }, [filter.searchBy, sortedPosts]);
+  const sortedAndFilteredPosts = useSortedAndFilteredPosts(posts, filter.sortBy, filter.searchBy);
 
   return (  
     <div className="App"> 
