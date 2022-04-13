@@ -49,6 +49,7 @@
     padding: 10px;
     border: 1px solid royalblue;    
     cursor: pointer;
+    margin: 5px;
 }
 
 .page__current{
