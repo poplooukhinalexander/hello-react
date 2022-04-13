@@ -10,6 +10,7 @@ import PostService from './api/PostService';
 import MyLoader from './components/UI/loader/MyLoader';
 import { useFetch } from './hooks/useFetch';
 import { getPages, getPagesCount } from './utils/pages';
+import MyPagination from './components/pagination/MyPagination';
 
 function App() {  
   const [posts, setPosts] = useState([]);
@@ -57,11 +58,7 @@ function App() {
         ? <div style={{display: 'flex', justifyContent: 'center'}}><MyLoader/></div>
         : <PostList remove={removePost} posts={sortedAndFilteredPosts} title="My favorite posts"/>      
       }     
-      <div className="page__wrapper">{
-          getPages(pagesCount).map(pageNum => 
-            <span key={pageNum} className={page === pageNum ? "page page__current" : "page"} onClick={() => setPage(pageNum)}>{pageNum}</span>)
-        }
-      </div>        
+      <MyPagination pages={getPages(pagesCount)} currentPage={page} setPage={setPage}/>   
     </div>    
   );
 }
