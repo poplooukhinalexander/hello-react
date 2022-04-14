@@ -1,24 +1,26 @@
 import React from 'react';
-import { Link, Routes, Route} from "react-router-dom";
+import { Link, Routes, Route } from "react-router-dom";
 import Post from './pages/Post';
 import About from './pages/About';
 import './styles/App.css';
 import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 
 
 function App() {  
   return (  
    <div className='App'>
      <nav>
-       <Link to="/">Home</Link>
-       <Link to="/about">About</Link>
-       <Link to="/posts">Posts</Link>
-     </nav>
-     <Routes>
+       <Link className='nav-item' to="/">Home</Link>
+       <Link className='nav-item' to="/about">About</Link>
+       <Link className='nav-item' to="/posts">Posts</Link>
+     </nav>     
+    <Routes>
         <Route path="/" element={<Home/>}/>                      
         <Route path="/about" element={<About/>}/>                  
         <Route path="/posts" element={<Post/>}/>        
-     </Routes>
+        <Route path="*" element={<NotFound/>}/>
+    </Routes>     
    </div>
   );
 }

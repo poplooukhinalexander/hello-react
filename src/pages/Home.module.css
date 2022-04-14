@@ -1,6 +1,6 @@
 .home{
     font-size: large;
-    text-align: center;
-    display: flex;
-    width: 400px;
+    text-align: center;   
+    vertical-align:center;
+    width: 800px;
 }

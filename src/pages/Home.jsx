@@ -3,7 +3,7 @@ import Classes from './Home.module.css';
 
 const Home = () => {
     return (
-        <h1 className={Classes.home}>This is Start page!!!</h1>
+        <h1 className={Classes.home}>My Home Page.</h1>
     );
 }
 

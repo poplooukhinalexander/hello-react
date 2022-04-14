@@ -6,7 +6,8 @@
 
 #root{
     display: flex;  
-    justify-content: center;  
+    align-items: center;  
+    flex-direction: column;
 }
 
 .App {
@@ -38,4 +39,9 @@
 .post-exit-active {
     transform: translateX(-350px);
     transition: all 500ms ease-in;
+}
+
+.nav-item {
+    padding: 15px;
+    margin: 15px;
 }
