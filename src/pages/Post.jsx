@@ -24,8 +24,8 @@ const Post = () => {
         setPagesCount(getPagesCount(itemsCount, limit));
     });
 
-    const [limit, setLimit] = useState(10);
-    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);      
+    const [page, setPage] = useState(1); 
     const [pagesCount, setPagesCount] = useState(0);
 
     const createPost = (newPost) => {
@@ -34,7 +34,7 @@ const Post = () => {
     }
 
     const removePost = (removedPost) => {
-        setPosts(posts.filter(p => p.id !== removedPost.id));
+        setPosts(posts.filter(p => p.id !== removedPost.id));    
     }
 
 
@@ -56,7 +56,7 @@ const Post = () => {
         }{
           isPostLoading
           ? <div style={{display: 'flex', justifyContent: 'center'}}><MyLoader/></div>
-          : <PostList remove={removePost} posts={sortedAndFilteredPosts} title="My favorite posts"/>      
+          : <PostList remove={removePost} posts={sortedAndFilteredPosts} title="My favorite posts" pageNum={page}/>      
         }     
         <MyPagination pages={getPages(pagesCount)} currentPage={page} setPage={setPage}/>   
     </div>    
