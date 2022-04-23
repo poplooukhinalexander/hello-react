@@ -11,8 +11,9 @@ import MyLoader from '../components/UI/loader/MyLoader';
 import { useFetch } from '../hooks/useFetch';
 import { getPages, getPagesCount } from '../utils/pages';
 import MyPagination from '../components/pagination/MyPagination';
+import { useParams } from "react-router-dom";
 
-const Post = () => {
+const Post = () => {  
     const [posts, setPosts] = useState([]);
 
     const [filter, setFilter] = useState({sortBy:"", searchBy:""})
@@ -23,11 +24,13 @@ const Post = () => {
         const itemsCount = postsResponse.headers["x-total-count"]
         setPagesCount(getPagesCount(itemsCount, limit));
     });
-
-    const [limit, setLimit] = useState(10);      
-    const [page, setPage] = useState(1); 
+    const {pageNum} = useParams();
+    const [limit, setLimit] = useState(10);
+    const activePage = pageNum == undefined || pageNum === ':pageNum' ? 1 : pageNum;
+    console.log(`ActivePage: ${activePage}`);
+    const [page, setPage] = useState(activePage); 
     const [pagesCount, setPagesCount] = useState(0);
-
+  
     const createPost = (newPost) => {
         setPosts([...posts, newPost]);
         setModalVisibility(false);
@@ -44,7 +47,7 @@ const Post = () => {
 
     const sortedAndFilteredPosts = useSortedAndFilteredPosts(posts, filter.sortBy, filter.searchBy);
 
-    return (
+    return (      
     <div className={Classes.post}>               
         <MyButton style={{marginTop: 30}} onClick={() => setModalVisibility(true)}>Create Post</MyButton>
         <MyModal visible={modalVisibility} setVisible={setModalVisibility}>
@@ -58,6 +61,7 @@ const Post = () => {
           ? <div style={{display: 'flex', justifyContent: 'center'}}><MyLoader/></div>
           : <PostList remove={removePost} posts={sortedAndFilteredPosts} title="My favorite posts" pageNum={page}/>      
         }     
+        {console.log(`Current page: ${page}`)}
         <MyPagination pages={getPages(pagesCount)} currentPage={page} setPage={setPage}/>   
     </div>    
     );

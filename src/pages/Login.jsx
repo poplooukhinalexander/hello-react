@@ -8,13 +8,11 @@ export default function Login()  {
     const authContext = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation()
-    const from =  location.state 
-        && location.state.from       
-        || '/';
-    const login = (ev) => {
+    const from =  (location.state && location.state.from) || '/';
+    const login = (ev) => {      
         ev.preventDefault();
         authContext.setIsAuthorized(true);      
-        navigate(from, { replace: true });
+        navigate(from, { replace: true });    
     }
     return(<div>
         <h1>Please, Login</h1>

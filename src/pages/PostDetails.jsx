@@ -2,16 +2,13 @@ import React, { useState, useEffect} from "react";
 import PostService from '../api/PostService';
 import { useFetch } from "../hooks/useFetch";
 import Comment from "../components/Comment";
-import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import MyButton from "../components/UI/button/MyButton";
 
 const PostDetails = () => {
-    const {id} = useParams();
-    const [searchParams] = useSearchParams();
+    const {id} = useParams();    
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state && location.state.from || '/posts';
-    console.log(navigate);
+
     const [fetchComments, isLoading, error] = useFetch(async () => {
         const response = await PostService.getComments(id);  
         setComments(response.data);
@@ -39,7 +36,7 @@ const PostDetails = () => {
             comments.map((item, index) => <Comment key={item.id} number={index + 1} comment={item}/>)
         }
 
-        <MyButton onClick={() => navigate(from)} style={{marginTop:15}}>Back</MyButton>
+        <MyButton onClick={() => navigate(-1)} style={{marginTop:15}}>Back</MyButton>
 
     </div>);    
 }

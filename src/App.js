@@ -29,8 +29,9 @@ function App() {
       <Routes>           
         <Route path="/" element={<Home/>}/>                      
         <Route path="/about" element={<About/>}/>                      
-        <Route path="/posts" element={<RequireAuth><Post/></RequireAuth>}/>    
-        <Route path="/posts/:id" element={<RequireAuth><PostDetails/></RequireAuth>}/> 
+        <Route path="/posts" element={<RequireAuth><Post/></RequireAuth>}/>
+        <Route path="/posts/:pageNum" element={<RequireAuth><Post/></RequireAuth>}/>
+        <Route path="/post/:id" element={<RequireAuth><PostDetails/></RequireAuth>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="*" element={<NotFound/>}/>    
       </Routes>     
